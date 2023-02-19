@@ -29,4 +29,24 @@ if __name__ == "__main__":
     plt.scatter(X[:,0], X[:,1], c=y, cmap='brg')
     plt.show()
 
-    # Dense Layer Class
+    # Dense Layer Class (fully connected)
+
+    class Layer_Dense:
+
+        def __init__(self, n_inputs, n_neurons):
+            # Initialize weights and biases (oftentimes randomly, pretrained possible)
+            # inputs x neurons instead of transposing in every forward pass
+            self.weights = 0.01 * np.random.randn(n_inputs, n_neurons) # gaussian distribution (m=0, v=1)
+            self.biases = np.zeros((1, n_neurons))
+
+        def forwards(self, inputs):
+            # Calculate output values from inputs, weights and biases
+            self.output = np.dot(inputs, self.weights) + self.biases
+
+    # example
+    X, y = spiral_data(samples=100, classes=3)
+    # create dense layer with 2 input features and 3 output values
+    dense1 = Layer_Dense(2,3)
+    # forward pass
+    dense1.forwards(X)
+    print(dense1.weights)
