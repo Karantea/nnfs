@@ -3,6 +3,19 @@ import nnfs
 from nnfs.datasets import spiral_data
 import matplotlib.pyplot as plt
 
+# Dense Layer Class (fully connected)
+class Layer_Dense:
+
+    def __init__(self, n_inputs, n_neurons):
+        # Initialize weights and biases (oftentimes randomly, pretrained possible)
+        # inputs x neurons instead of transposing in every forward pass
+        self.weights = 0.01 * np.random.randn(n_inputs, n_neurons)  # gaussian distribution (m=0, v=1)
+        self.biases = np.zeros((1, n_neurons))
+
+    def forward(self, inputs):
+        # Calculate output values from inputs, weights and biases
+        self.output = np.dot(inputs, self.weights) + self.biases
+
 
 if __name__ == "__main__":
     # Adding Layers
@@ -28,20 +41,6 @@ if __name__ == "__main__":
     X, y = spiral_data(samples=100, classes=3)
     plt.scatter(X[:,0], X[:,1], c=y, cmap='brg')
     plt.show()
-
-    # Dense Layer Class (fully connected)
-
-    class Layer_Dense:
-
-        def __init__(self, n_inputs, n_neurons):
-            # Initialize weights and biases (oftentimes randomly, pretrained possible)
-            # inputs x neurons instead of transposing in every forward pass
-            self.weights = 0.01 * np.random.randn(n_inputs, n_neurons) # gaussian distribution (m=0, v=1)
-            self.biases = np.zeros((1, n_neurons))
-
-        def forwards(self, inputs):
-            # Calculate output values from inputs, weights and biases
-            self.output = np.dot(inputs, self.weights) + self.biases
 
     # example
     X, y = spiral_data(samples=100, classes=3)
