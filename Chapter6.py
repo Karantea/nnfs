@@ -10,6 +10,7 @@ from Chapter5 import Loss_CategoricalCrossEntropy
 # Introduction to Optimization
 
 # Method 1 (most simple one): change weights/biases random
+# not reliable
 
 nnfs.init()
 X, y = vertical_data(samples=100, classes=3)
@@ -24,6 +25,7 @@ activation2 = Activation_Softmax()
 loss_function = Loss_CategoricalCrossEntropy()
 
 # variables to track loss
+# copy() ensures full copy rather than reference to object
 lowest_loss = 9999999 # init
 best_dense1_weights = dense1.weights.copy()
 best_dense1_biases = dense1.biases.copy()
@@ -48,7 +50,7 @@ for iteration in range(1000):
 
     # calculate accuracy
     predictions = np.argmax(activation2.output, axis=1)
-    accurary = np.mean(predictions==y)
+    accurary = np.mean(predictions == y)
 
     if loss < lowest_loss:
         print('New set of weights found, iteration:', iteration,
@@ -60,7 +62,8 @@ for iteration in range(1000):
         lowest_loss = loss
 
 # Method 2: Update weights with small adjustments
-# not viable for hard problems like spiral data
+# not viable for high complexity problems
+# problem: local minimum of loss
 
 for iteration in range(1000):
     # generate new set of weights/biases

@@ -7,6 +7,12 @@ class Activation_ReLU:
 
     def forward(self, inputs):
         self.output = np.maximum(0, inputs)
+        self.inputs = inputs
+
+    def backward(self, dvalues):
+        # needs modification, so we copy values
+        self.dinputs = dvalues.copy()
+        self.dinputs[self.inputs <= 0] = 0
 
 class Activation_Softmax:
 
