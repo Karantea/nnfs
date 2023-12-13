@@ -1,13 +1,44 @@
-import nnfs
 import numpy as np
-import math
-from nnfs.datasets import vertical_data
-from Chapter3 import Layer_Dense
 from Chapter4 import Activation_Softmax
-from Chapter4 import Activation_ReLU
 from Chapter5 import Loss_CategoricalCrossEntropy
 
 # Backpropagation
+
+# Softmax classifier - combined Softmax activation
+# and cross-entropy loss for faster backward step
+# single backward steps can be found in the respective classes
+# about 7 times faster than calculating gradient separately
+class Activation_Softmax_Loss_CategoricalCrossentropy():
+
+    # creates activation and loss function objects
+    def __init__(self):
+        self.activation = Activation_Softmax()
+        self.loss = Loss_CategoricalCrossEntropy()
+
+    # forward pass
+    def forward(self, inputs, y_true):
+        # output layers activation function
+        self.activation.forward(inputs)
+        self.output = self.activation.output
+        return self.loss.calculate(self.output, y_true)
+
+    #backward pass
+    def backward(self, dvalues, y_true):
+        # number of samples
+        samples = len(dvalues)
+        # if labels one-hot-encodes, change to discrete values
+        if len(y_true.shape) == 2:
+            y_true = np.argmax(y_true, axis=1)
+
+        # copy to modify
+        self.dinputs = dvalues.copy()
+        # calculate gradient
+        self.dinputs[range(samples), y_true] -= 1
+        # normalize gradient
+        self.dinputs = self.dinputs / samples
+
+
+
 # simple example for 1 neuron only
 
 x = [1.0, -2.0, 3.0]

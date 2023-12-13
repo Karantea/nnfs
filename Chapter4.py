@@ -25,6 +25,25 @@ class Activation_Softmax:
         probabilities = exp_values / np.sum(exp_values, axis=1,
                                             keepdims=True)
         self.output = probabilities
+
+    def backwards(self, dvalues):
+
+        # create uninizialized array
+        self.dinputs = np.empty_like(dvalues)
+
+        # enumerate outputs and gradients
+        for index, (single_output, single_davalue) in \
+            enumerate(zip(self.output, dvalues)):
+            # flatten output array
+            single_output = single_output.reshape(-1, 1)
+            # calculate jacobian matrix of the output
+            jacobian_matrix = np.diagflat(single_output) - \
+                              np.dot(single_output, single_output.T)
+            # calculate sample-wise gradient
+            # and add it to the array of sample gradients
+            self.dinputs[index] = np.dot(jacobian_matrix, single_davalue)
+
+
 if __name__ == "__main__":
     # Activation Functions
     # Rectified linear function -> unbounded, not normalized with other units
