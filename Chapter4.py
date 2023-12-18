@@ -1,5 +1,4 @@
 import numpy as np
-import math
 from nnfs.datasets import spiral_data
 from Chapter3 import Layer_Dense
 

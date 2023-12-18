@@ -1,6 +1,5 @@
 import nnfs
 import numpy as np
-import math
 from nnfs.datasets import vertical_data
 from Chapter3 import Layer_Dense
 from Chapter4 import Activation_Softmax
