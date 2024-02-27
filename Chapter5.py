@@ -73,6 +73,33 @@ class Loss:
 
         # return loss
         return data_loss
+    # regularization loss calculation
+    def regularization_loss(self, layer):
+        # 0 by default
+        regulatization_loss = 0
+
+        # L1 regularization - weights
+        # only when factor > 0
+        if layer.weight_regularizer_l1 > 0:
+            regulatization_loss += layer.weight_regularizer_l1 * \
+                                    np.sum(np.abs(layer.weights))
+
+        # L2 regularization - weights
+        if layer.weight_regularizer_l2 > 0:
+            regulatization_loss += layer.weight_regularizer_l2 * \
+                                    np.sum(layer.weights * layer.weights)
+
+        # L1 regularization - biases
+        if layer.bias_regularization_l1 > 0:
+            regulatization_loss += layer.bias_regularization_l1 * \
+                                    np.sum(abs(layer.biases))
+
+        # L2 regularization - biases
+        if layer.bias_regularization_l2 > 0:
+            regulatization_loss += layer.bias_regularization_l2 * \
+                                    sum(layer.biases * layer.biases)
+
+        return regulatization_loss
 
 # Cross-entropy loss
 class Loss_CategoricalCrossEntropy(Loss):
