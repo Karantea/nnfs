@@ -1,6 +1,6 @@
 # Neural Networks from scratch with python
 
-This repository will contain the code base for the book above mentioned.
+This repository will contain the code base for the book above mentioned. it serves as a reminder and personal reference book.
 
 Harrison Kinsley & Daniel Kukieła - Neural Networks from Scratch (NNFS) https://nnfs.io
 
